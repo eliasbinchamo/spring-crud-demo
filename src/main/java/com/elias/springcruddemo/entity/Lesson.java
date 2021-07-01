@@ -10,7 +10,7 @@ public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
-    String title;
+    public String title;
 
     public Lesson() {
     }
@@ -26,7 +26,7 @@ public class Lesson {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitle(String titl) {
+        this.title = titl;
     }
 }

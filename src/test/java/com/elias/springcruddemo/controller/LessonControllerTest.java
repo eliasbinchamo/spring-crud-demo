@@ -17,8 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -41,6 +40,25 @@ class LessonControllerTest {
 
         MockHttpServletRequestBuilder request = get("/lessons")
                 .contentType(MediaType.APPLICATION_JSON);
+
+        this.mvc.perform(request)
+                .andExpect(status().isOk());
+//                .andExpect(jsonPath("$[0].id", equalTo(lesson.getId().intValue()) ));
+
+    }
+    @Test
+    @Transactional
+    @Rollback
+    void updateLesson() throws Exception {
+        Lesson lesson = new Lesson();
+        lesson.setTitle("Lou");
+        repository.save(lesson);
+        //"{\"title\":\"lesson 2\"}"
+        MockHttpServletRequestBuilder request = patch("/lessons/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content("{\"title\":\"lesson 2\"}");
+
 
         this.mvc.perform(request)
                 .andExpect(status().isOk());
