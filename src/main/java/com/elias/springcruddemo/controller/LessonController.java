@@ -17,6 +17,10 @@ public class LessonController {
     public Iterable<Lesson> getLessons(){
         return this.lessonRepository.findAll();
     }
+    @GetMapping("/lessons/find/{title}")
+    public Iterable<Lesson> findLessonByTitle(@PathVariable String title){
+        return this.lessonRepository.findByTitle(title);
+    }
     @PatchMapping("/lessons/{id}")
     public void updateLesson(@RequestBody Lesson body, @PathVariable Long id){
         Lesson lesson = this.lessonRepository.findById(id).get();

@@ -49,6 +49,22 @@ class LessonControllerTest {
     @Test
     @Transactional
     @Rollback
+    void getLessonsByTitle() throws Exception {
+        Lesson lesson = new Lesson();
+        lesson.setTitle("Lou");
+        repository.save(lesson);
+
+        MockHttpServletRequestBuilder request = get("/lessons/find/hello")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        this.mvc.perform(request)
+                .andExpect(status().isOk());
+//                .andExpect(jsonPath("$[0].id", equalTo(lesson.getId().intValue()) ));
+
+    }
+    @Test
+    @Transactional
+    @Rollback
     void updateLesson() throws Exception {
         Lesson lesson = new Lesson();
         lesson.setTitle("Lou");
@@ -57,12 +73,11 @@ class LessonControllerTest {
         MockHttpServletRequestBuilder request = patch("/lessons/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content("{\"title\":\"lesson 2\"}");
-
-
+                .content("{\"title\":\"SQL\",\"deliveredOn\":\"2012-06-09\"}");
         this.mvc.perform(request)
                 .andExpect(status().isOk());
 //                .andExpect(jsonPath("$[0].id", equalTo(lesson.getId().intValue()) ));
 
     }
+
 }

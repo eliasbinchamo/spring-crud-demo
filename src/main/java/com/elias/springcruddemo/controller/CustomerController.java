@@ -23,8 +23,8 @@ public class CustomerController {
         return customerRepository.findById(Id).get();
     }
     @GetMapping("/customers/{lastName}")
-    public List<Customer> getCustomersByLastName(@PathVariable String name){
-        return customerRepository.getByLastName(name);
+    public Iterable<Customer> findBylastName(@PathVariable String lastName){
+        return customerRepository.findByLastName(lastName);
     }
     @PostMapping("/")
     public Customer getCustomerById(@RequestBody Customer customer){
