@@ -2,8 +2,11 @@ package com.elias.springcruddemo.controller;
 
 import com.elias.springcruddemo.entity.Lesson;
 import com.elias.springcruddemo.repository.LessonRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -26,6 +29,14 @@ public class LessonController {
         Lesson lesson = this.lessonRepository.findById(id).get();
         lesson.setTitle(body.getTitle());
         this.lessonRepository.save(lesson);
+    }
+    @PostMapping("/addItems")
+    public Iterable<Lesson> addLessons(@RequestBody List<Lesson> body){
+        return this.lessonRepository.saveAll(body);
+    }
+    @GetMapping("/lessons/between")
+    public Iterable<Lesson> getBetween(@RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime initialDate, @RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime finalDate) throws Exception{
+        return lessonRepository.findByStartDateBetween(initialDate, finalDate);
     }
 
 }

@@ -1,9 +1,8 @@
 package com.elias.springcruddemo.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,6 +11,7 @@ public class Lesson {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
     String title;
+    @Column()
     LocalDateTime deliveredOn;
 
     public LocalDateTime getDeliveredOn() {
@@ -37,5 +37,10 @@ public class Lesson {
 
     public void setTitle(String titl) {
         this.title = titl;
+    }
+
+    @Override
+    public String toString() {
+        return "{\"id\":"+id+","+"\"title\":\""+title+"\","+"\"deliveredOn\":\""+deliveredOn.toString()+"\"}";
     }
 }
